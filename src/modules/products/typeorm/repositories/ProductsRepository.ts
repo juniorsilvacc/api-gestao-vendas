@@ -8,11 +8,7 @@ class ProductsRepository
   implements IProductsRepository
 {
   async findByName(name: string): Promise<Product | undefined> {
-    const product = this.findOne({
-      where: {
-        name,
-      },
-    });
+    const product = await this.findOne({ name });
 
     return product;
   }
