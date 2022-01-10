@@ -3,8 +3,15 @@ import { DeleteProductController } from '@modules/products/controllers/DeletePro
 import { ListProductController } from '@modules/products/controllers/ListProductController';
 import { ShowProductController } from '@modules/products/controllers/ShowProductController';
 import { UpdateProductController } from '@modules/products/controllers/UpdateProductController';
-import { celebrate, Segments, Joi } from 'celebrate';
+
 import { Router } from 'express';
+
+import {
+  validationCreate,
+  validationDelete,
+  validationShow,
+  validationUpdate,
+} from '../middlewares/validation';
 
 const productsRoutes = Router();
 
@@ -14,58 +21,14 @@ const showProductController = new ShowProductController();
 const deleteProductController = new DeleteProductController();
 const updateProductController = new UpdateProductController();
 
-//Create
-productsRoutes.post(
-  '/',
-  celebrate({
-    [Segments.BODY]: {
-      name: Joi.string().required(),
-      price: Joi.number().precision(2),
-      quantity: Joi.number().required(),
-    },
-  }),
-  createProductController.handle,
-);
+productsRoutes.post('/', validationCreate, createProductController.handle);
 
-//List All
 productsRoutes.get('/', listProductController.handle);
 
-//List Show
-productsRoutes.get(
-  '/:id',
-  celebrate({
-    [Segments.PARAMS]: {
-      id: Joi.string().uuid().required(),
-    },
-  }),
-  showProductController.handle,
-);
+productsRoutes.get('/:id', validationShow, showProductController.handle);
 
-//Delete
-productsRoutes.delete(
-  '/:id',
-  celebrate({
-    [Segments.PARAMS]: {
-      id: Joi.string().uuid().required(),
-    },
-  }),
-  deleteProductController.handle,
-);
+productsRoutes.delete('/:id', validationDelete, deleteProductController.handle);
 
-//Update
-productsRoutes.patch(
-  '/:id',
-  celebrate({
-    [Segments.PARAMS]: {
-      id: Joi.string().uuid().required(),
-    },
-    [Segments.BODY]: {
-      name: Joi.string().required(),
-      price: Joi.number().precision(2),
-      quantity: Joi.number().required(),
-    },
-  }),
-  updateProductController.handle,
-);
+productsRoutes.patch('/:id', validationUpdate, updateProductController.handle);
 
 export { productsRoutes };
