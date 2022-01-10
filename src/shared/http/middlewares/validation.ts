@@ -30,3 +30,11 @@ export const validationUpdate = celebrate({
     quantity: Joi.number().required(),
   },
 });
+
+export const validationUser = celebrate({
+  [Segments.BODY]: {
+    name: Joi.string().required().min(6).max(36),
+    email: Joi.string().required().email(),
+    password: Joi.string().required().min(6).max(18),
+  },
+});
