@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import { ListProductService } from '../services/ListProductService';
 
-class ListProductServiceController {
+class ListProductController {
   async handle(request: Request, response: Response): Promise<Response> {
     const listProductService = container.resolve(ListProductService);
 
@@ -12,4 +12,4 @@ class ListProductServiceController {
   }
 }
 
-export { ListProductServiceController };
+export { ListProductController };
