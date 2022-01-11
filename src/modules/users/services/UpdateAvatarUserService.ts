@@ -5,15 +5,14 @@ import fs from 'fs';
 import { AppError } from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
 import { UsersRepository } from '../typeorm/repositories/UsersRepository';
-import { User } from '../typeorm/entities/User';
 
 interface IRequest {
   user_id: string;
-  avatarFile: string;
+  avatarFileName: string;
 }
 
 class UpdateAvatarUserService {
-  async execute({ user_id, avatarFile }: IRequest): Promise<User> {
+  async execute({ user_id, avatarFileName }: IRequest): Promise<void> {
     const usersRepository = getCustomRepository(UsersRepository);
 
     const user = await usersRepository.findById(user_id);
@@ -32,11 +31,9 @@ class UpdateAvatarUserService {
       }
     }
 
-    user.avatar = avatarFile;
+    user.avatar = avatarFileName;
 
     await usersRepository.save(user);
-
-    return user;
   }
 }
 
