@@ -5,6 +5,7 @@ import { ShowProductController } from '@modules/products/controllers/ShowProduct
 import { UpdateProductController } from '@modules/products/controllers/UpdateProductController';
 
 import { Router } from 'express';
+import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 
 import {
   validationCreate,
@@ -21,14 +22,34 @@ const showProductController = new ShowProductController();
 const deleteProductController = new DeleteProductController();
 const updateProductController = new UpdateProductController();
 
-productsRoutes.post('/', validationCreate, createProductController.handle);
+productsRoutes.post(
+  '/',
+  validationCreate,
+  ensureAuthenticated,
+  createProductController.handle,
+);
 
-productsRoutes.get('/', listProductController.handle);
+productsRoutes.get('/', ensureAuthenticated, listProductController.handle);
 
-productsRoutes.get('/:id', validationShow, showProductController.handle);
+productsRoutes.get(
+  '/:id',
+  validationShow,
+  ensureAuthenticated,
+  showProductController.handle,
+);
 
-productsRoutes.delete('/:id', validationDelete, deleteProductController.handle);
+productsRoutes.delete(
+  '/:id',
+  validationDelete,
+  ensureAuthenticated,
+  deleteProductController.handle,
+);
 
-productsRoutes.patch('/:id', validationUpdate, updateProductController.handle);
+productsRoutes.patch(
+  '/:id',
+  validationUpdate,
+  ensureAuthenticated,
+  updateProductController.handle,
+);
 
 export { productsRoutes };
