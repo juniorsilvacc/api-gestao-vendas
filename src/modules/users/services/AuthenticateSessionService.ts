@@ -1,9 +1,9 @@
 import { AppError } from '@shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
 import { UsersRepository } from '../typeorm/repositories/UsersRepository';
-import { User } from '../typeorm/entities/User';
 
 import { compare } from 'bcrypt';
+import { sign } from 'jsonwebtoken';
 
 interface IRequest {
   email: string;
@@ -13,12 +13,14 @@ interface IRequest {
 interface IResponse {
   user: {
     name: string;
-    password: string;
+    email: string;
   };
+
+  token: string;
 }
 
 class AuthenticateSessionService {
-  async execute({ email, password }: IRequest): Promise<User> {
+  async execute({ email, password }: IRequest): Promise<IResponse> {
     const usersRepository = getCustomRepository(UsersRepository);
 
     const user = await usersRepository.findByEmail(email);
@@ -33,7 +35,18 @@ class AuthenticateSessionService {
       throw new AppError('Email or password incorrect', 401);
     }
 
-    return user;
+    const token = sign({}, '91cf4aa79dbb713fbf551ce3efa9c12d', {
+      subject: user.id,
+      expiresIn: '1d',
+    });
+
+    return {
+      user: {
+        name: user.name,
+        email: user.email,
+      },
+      token,
+    };
   }
 }
 
