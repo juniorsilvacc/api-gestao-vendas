@@ -38,3 +38,10 @@ export const validationUser = celebrate({
     password: Joi.string().required().min(6).max(18),
   },
 });
+
+export const validationAuthenticate = celebrate({
+  [Segments.BODY]: {
+    email: Joi.string().required().email(),
+    password: Joi.string().required().min(6).max(18),
+  },
+});
