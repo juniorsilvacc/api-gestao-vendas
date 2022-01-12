@@ -45,3 +45,9 @@ export const validationAuthenticate = celebrate({
     password: Joi.string().required().min(6).max(18),
   },
 });
+
+export const validationForgotPassword = celebrate({
+  [Segments.BODY]: {
+    email: Joi.string().required().email(),
+  },
+});
