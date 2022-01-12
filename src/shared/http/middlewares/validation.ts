@@ -51,3 +51,11 @@ export const validationForgotPassword = celebrate({
     email: Joi.string().required().email(),
   },
 });
+
+export const validationResetPassword = celebrate({
+  [Segments.BODY]: {
+    token: Joi.string().uuid().required(),
+    password: Joi.string().required().min(6).max(18),
+    password_confirmation: Joi.string().required().valid(Joi.ref('password')),
+  },
+});
