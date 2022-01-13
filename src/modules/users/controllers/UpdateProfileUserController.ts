@@ -5,7 +5,7 @@ import { UpdateProfileUserService } from '../services/UpdateProfileUserService';
 
 class UpdateProfileUserController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const user_id = request.user.id;
+    const id = request.user.id;
 
     const { name, email, password, old_password } = request.body;
 
@@ -14,7 +14,7 @@ class UpdateProfileUserController {
     );
 
     const user = await updateProfileUserService.execute({
-      user_id,
+      id,
       name,
       email,
       password,

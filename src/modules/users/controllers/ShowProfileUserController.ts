@@ -7,9 +7,9 @@ class ShowProfileUserController {
   async handle(request: Request, response: Response): Promise<Response> {
     const showProfileUserService = container.resolve(ShowProfileUserService);
 
-    const user_id = request.user.id;
+    const id = request.user.id;
 
-    const user = await showProfileUserService.execute({ user_id });
+    const user = await showProfileUserService.execute({ id });
 
     return response.json(user);
   }
