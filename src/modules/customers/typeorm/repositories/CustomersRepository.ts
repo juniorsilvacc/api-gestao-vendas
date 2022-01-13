@@ -7,6 +7,18 @@ class CustomersRepository
   extends Repository<Customer>
   implements ICustomersRepository
 {
+  async findByName(name: string): Promise<Customer | undefined> {
+    const customerName = await this.findOne({ name });
+
+    return customerName;
+  }
+
+  async findById(id: string): Promise<Customer | undefined> {
+    const customerId = await this.findOne({ id });
+
+    return customerId;
+  }
+
   async findByEmail(email: string): Promise<Customer | undefined> {
     const customerEmail = await this.findOne({ email });
 
