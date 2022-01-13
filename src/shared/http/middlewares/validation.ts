@@ -59,3 +59,18 @@ export const validationResetPassword = celebrate({
     password_confirmation: Joi.string().required().valid(Joi.ref('password')),
   },
 });
+
+export const validationProfile = celebrate({
+  [Segments.BODY]: {
+    name: Joi.string().required().min(6).max(36),
+    email: Joi.string().required().email(),
+    old_password: Joi.string().min(6).max(18),
+    password: Joi.string().optional().min(6).max(18),
+    password_confirmation: Joi.string()
+      .valid(Joi.ref('password'))
+      .when('password', {
+        is: Joi.exist(),
+        then: Joi.required(),
+      }),
+  },
+});
