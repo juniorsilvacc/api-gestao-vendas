@@ -8,7 +8,7 @@ interface IRequest {
   email: string;
 }
 
-class CreateProductService {
+class CreateCustomerService {
   async execute({ name, email }: IRequest): Promise<Customer> {
     const customersRepository = getCustomRepository(CustomersRepository);
 
@@ -29,4 +29,4 @@ class CreateProductService {
   }
 }
 
-export { CreateProductService };
+export { CreateCustomerService };

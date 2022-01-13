@@ -8,9 +8,9 @@ class ShowProductController {
 
     const showProductService = container.resolve(ShowProductService);
 
-    const produtcs = await showProductService.execute({ id });
+    const produtc = await showProductService.execute({ id });
 
-    return response.json(produtcs);
+    return response.json(produtc);
   }
 }
 
