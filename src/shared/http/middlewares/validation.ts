@@ -1,5 +1,7 @@
 import { celebrate, Segments, Joi } from 'celebrate';
 
+//Products
+
 export const validationShow = celebrate({
   [Segments.PARAMS]: {
     id: Joi.string().uuid().required(),
@@ -31,6 +33,8 @@ export const validationUpdate = celebrate({
   },
 });
 
+// Users
+
 export const validationUser = celebrate({
   [Segments.BODY]: {
     name: Joi.string().required().min(6).max(36),
@@ -39,12 +43,16 @@ export const validationUser = celebrate({
   },
 });
 
+// Authenticated
+
 export const validationAuthenticate = celebrate({
   [Segments.BODY]: {
     email: Joi.string().required().email(),
     password: Joi.string().required().min(6).max(18),
   },
 });
+
+// Forgot
 
 export const validationForgotPassword = celebrate({
   [Segments.BODY]: {
@@ -60,6 +68,8 @@ export const validationResetPassword = celebrate({
   },
 });
 
+// Profile
+
 export const validationProfile = celebrate({
   [Segments.BODY]: {
     name: Joi.string().required().min(6).max(36),
@@ -72,5 +82,24 @@ export const validationProfile = celebrate({
         is: Joi.exist(),
         then: Joi.required(),
       }),
+  },
+});
+
+// Customers
+
+export const validationCreateCustomer = celebrate({
+  [Segments.BODY]: {
+    name: Joi.string().required(),
+    email: Joi.string().required().email(),
+  },
+});
+
+export const validationUpdateCustomer = celebrate({
+  [Segments.PARAMS]: {
+    id: Joi.string().uuid().required(),
+  },
+  [Segments.BODY]: {
+    name: Joi.string().required(),
+    email: Joi.string().required().email(),
   },
 });
