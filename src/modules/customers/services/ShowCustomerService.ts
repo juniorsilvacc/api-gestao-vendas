@@ -14,7 +14,7 @@ class ShowCustomerService {
     const customer = await customersRepository.findOne(id);
 
     if (!customer) {
-      throw new AppError('Customer not found.', 404);
+      throw new AppError('Customer not found.');
     }
 
     return customer;
