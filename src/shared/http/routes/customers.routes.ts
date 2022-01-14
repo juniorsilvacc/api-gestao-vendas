@@ -21,32 +21,26 @@ const showCustomerController = new ShowCustomerController();
 const deleteCustomerController = new DeleteCustomerController();
 const updateCustomerController = new UpdateCustomerController();
 
+customersRoutes.use(ensureAuthenticated);
+
 customersRoutes.post(
   '/',
-  ensureAuthenticated,
   validationCreateCustomer,
   createCustomerController.handle,
 );
 
-customersRoutes.get('/', ensureAuthenticated, listCustomerController.handle);
+customersRoutes.get('/', listCustomerController.handle);
 
-customersRoutes.get(
-  '/:id',
-  ensureAuthenticated,
-  validationShow,
-  showCustomerController.handle,
-);
+customersRoutes.get('/:id', validationShow, showCustomerController.handle);
 
 customersRoutes.delete(
   '/:id',
-  ensureAuthenticated,
   validationDelete,
   deleteCustomerController.handle,
 );
 
 customersRoutes.patch(
   '/:id',
-  ensureAuthenticated,
   validationUpdateCustomer,
   updateCustomerController.handle,
 );

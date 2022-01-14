@@ -22,34 +22,16 @@ const showProductController = new ShowProductController();
 const deleteProductController = new DeleteProductController();
 const updateProductController = new UpdateProductController();
 
-productsRoutes.post(
-  '/',
-  validationCreate,
-  ensureAuthenticated,
-  createProductController.handle,
-);
+productsRoutes.use(ensureAuthenticated);
 
-productsRoutes.get('/', ensureAuthenticated, listProductController.handle);
+productsRoutes.post('/', validationCreate, createProductController.handle);
 
-productsRoutes.get(
-  '/:id',
-  validationShow,
-  ensureAuthenticated,
-  showProductController.handle,
-);
+productsRoutes.get('/', listProductController.handle);
 
-productsRoutes.delete(
-  '/:id',
-  validationDelete,
-  ensureAuthenticated,
-  deleteProductController.handle,
-);
+productsRoutes.get('/:id', validationShow, showProductController.handle);
 
-productsRoutes.patch(
-  '/:id',
-  validationUpdate,
-  ensureAuthenticated,
-  updateProductController.handle,
-);
+productsRoutes.delete('/:id', validationDelete, deleteProductController.handle);
+
+productsRoutes.patch('/:id', validationUpdate, updateProductController.handle);
 
 export { productsRoutes };

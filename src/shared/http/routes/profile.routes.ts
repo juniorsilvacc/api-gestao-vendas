@@ -9,13 +9,10 @@ const profileRoutes = Router();
 const updateProfileUserController = new UpdateProfileUserController();
 const showProfileUserController = new ShowProfileUserController();
 
-profileRoutes.put(
-  '/',
-  ensureAuthenticated,
-  validationProfile,
-  updateProfileUserController.handle,
-);
+profileRoutes.use(ensureAuthenticated);
 
-profileRoutes.get('/', ensureAuthenticated, showProfileUserController.handle);
+profileRoutes.put('/', validationProfile, updateProfileUserController.handle);
+
+profileRoutes.get('/', showProfileUserController.handle);
 
 export { profileRoutes };

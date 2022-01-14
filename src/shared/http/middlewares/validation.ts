@@ -103,3 +103,18 @@ export const validationUpdateCustomer = celebrate({
     email: Joi.string().required().email(),
   },
 });
+
+// Orders
+
+export const validationShowOrder = celebrate({
+  [Segments.PARAMS]: {
+    id: Joi.string().uuid().required(),
+  },
+});
+
+export const validationCreateOrder = celebrate({
+  [Segments.BODY]: {
+    customer_id: Joi.string().uuid().required(),
+    products: Joi.required(),
+  },
+});
