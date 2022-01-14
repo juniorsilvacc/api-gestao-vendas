@@ -8,6 +8,8 @@ import {
 
 import { v4 as uuidV4 } from 'uuid';
 
+import { Exclude } from 'class-transformer';
+
 @Entity('users')
 class User {
   @PrimaryGeneratedColumn('uuid')
@@ -20,6 +22,7 @@ class User {
   email: string;
 
   @Column()
+  @Exclude()
   password: string;
 
   @Column()

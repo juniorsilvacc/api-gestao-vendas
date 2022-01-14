@@ -3,6 +3,8 @@ import { container } from 'tsyringe';
 
 import { UpdateProfileUserService } from '../services/UpdateProfileUserService';
 
+import { instanceToInstance } from 'class-transformer';
+
 class UpdateProfileUserController {
   async handle(request: Request, response: Response): Promise<Response> {
     const id = request.user.id;
@@ -21,7 +23,7 @@ class UpdateProfileUserController {
       old_password,
     });
 
-    return response.json(user);
+    return response.json(instanceToInstance(user));
   }
 }
 

@@ -3,6 +3,8 @@ import { container } from 'tsyringe';
 
 import { ShowProfileUserService } from '../services/ShowProfileUserService';
 
+import { instanceToInstance } from 'class-transformer';
+
 class ShowProfileUserController {
   async handle(request: Request, response: Response): Promise<Response> {
     const showProfileUserService = container.resolve(ShowProfileUserService);
@@ -11,7 +13,7 @@ class ShowProfileUserController {
 
     const user = await showProfileUserService.execute({ id });
 
-    return response.json(user);
+    return response.json(instanceToInstance(user));
   }
 }
 
