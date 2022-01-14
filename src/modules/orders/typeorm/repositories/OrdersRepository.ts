@@ -6,10 +6,7 @@ import { Order } from '../entities/Order';
 
 @EntityRepository(Order)
 class OrdersRepository extends Repository<Order> implements IOrdersRepository {
-  async createOrder({
-    customer,
-    products,
-  }: IRequest): Promise<Order | undefined> {
+  async createOrder({ customer, products }: IRequest): Promise<Order> {
     const order = this.create({
       customer,
       order_products: products,

@@ -14,7 +14,7 @@ export default interface IRequest {
 
 interface IOrdersRepository {
   findById(id: string): Promise<Order | undefined>;
-  createOrder({ customer, products }: IRequest): Promise<Order | undefined>;
+  createOrder({ customer, products }: IRequest): Promise<Order>;
 }
 
 export { IOrdersRepository, IRequest };
