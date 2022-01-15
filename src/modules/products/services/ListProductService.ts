@@ -8,8 +8,6 @@ class ListProductService {
   async execute(): Promise<Product[]> {
     const productsRepository = getCustomRepository(ProductsRepository);
 
-    //const redisCache = new RedisCache();
-
     let products = await redisCache.recover<Product[]>(
       'api-vendas-PRODUCT_LIST',
     );

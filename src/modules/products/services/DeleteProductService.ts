@@ -17,8 +17,6 @@ class DeleteProductService {
       throw new AppError('Product not found.');
     }
 
-    //const redisCache = new RedisCache();
-
     await redisCache.invalidate('api-vendas-PRODUCT_LIST');
 
     await productsRepository.remove(product);

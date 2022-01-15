@@ -27,8 +27,6 @@ class UpdateProductService {
       throw new AppError('The product already exists.');
     }
 
-    //const redisCache = new RedisCache();
-
     await redisCache.invalidate('api-vendas-PRODUCT_LIST');
 
     product.name = name;
