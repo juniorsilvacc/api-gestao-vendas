@@ -1,4 +1,4 @@
-import { Product } from '../typeorm/entities/Product';
+import { Product } from '../infra/typeorm/entities/Product';
 
 interface IFindProducts {
   id: string;

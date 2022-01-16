@@ -1,4 +1,4 @@
-import { Customer } from '../typeorm/entities/Customer';
+import { Customer } from '../infra/typeorm/entities/Customer';
 
 interface ICustomersRepository {
   findByEmail(email: string): Promise<Customer | undefined>;

@@ -1,4 +1,4 @@
-import { User } from '../typeorm/entities/User';
+import { User } from '../infra/typeorm/entities/User';
 
 interface IUsersRepository {
   findByName(name: string): Promise<User | undefined>;

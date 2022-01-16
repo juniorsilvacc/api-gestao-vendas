@@ -1,4 +1,4 @@
-import { UserToken } from '../typeorm/entities/UserToken';
+import { UserToken } from '../infra/typeorm/entities/UserToken';
 
 interface IUserTokensRepository {
   findByToken(token: string): Promise<UserToken | undefined>;
