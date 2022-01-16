@@ -9,9 +9,10 @@ import {
 import { v4 as uuidV4 } from 'uuid';
 
 import { Exclude } from 'class-transformer';
+import { IUser } from '@modules/users/domain/models/IUser';
 
 @Entity('users')
-class User {
+class User implements IUser {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

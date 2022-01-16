@@ -1,3 +1,4 @@
+import { ICustomer } from '@modules/customers/domain/models/ICustomer';
 import {
   Column,
   CreateDateColumn,
@@ -9,7 +10,7 @@ import {
 import { v4 as uuidV4 } from 'uuid';
 
 @Entity('customers')
-class Customer {
+class Customer implements ICustomer {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

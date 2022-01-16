@@ -1,3 +1,4 @@
+import { IUserToken } from '@modules/users/domain/models/IUserToken';
 import {
   Column,
   CreateDateColumn,
@@ -10,7 +11,7 @@ import {
 import { v4 as uuidV4 } from 'uuid';
 
 @Entity('users_tokens')
-class UserToken {
+class UserToken implements IUserToken {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

@@ -11,9 +11,10 @@ import {
 
 import { v4 as uuidV4 } from 'uuid';
 import { Product } from '@modules/products/infra/typeorm/entities/Product';
+import { IOrderProduct } from '@modules/orders/domain/models/IOrderProduct';
 
 @Entity('orders_products')
-class OrdersProducts {
+class OrdersProducts implements IOrderProduct {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

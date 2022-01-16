@@ -1,8 +1,7 @@
 import { AppError } from '@shared/errors/AppError';
-import { getCustomRepository } from 'typeorm';
-
 import { hash } from 'bcrypt';
-import { UsersRepository } from '../infra/typeorm/repositories/UsersRepository';
+import { IUsersRepository } from '../domain/repositories/IUsersRepository';
+import { inject, injectable } from 'tsyringe';
 
 interface IRequest {
   name: string;
@@ -10,11 +9,15 @@ interface IRequest {
   password: string;
 }
 
+@injectable()
 class CreateUserService {
-  async execute({ name, email, password }: IRequest): Promise<void> {
-    const usersRepository = getCustomRepository(UsersRepository);
+  constructor(
+    @inject('UsersRepository')
+    private usersRepository: IUsersRepository,
+  ) {}
 
-    const emailExits = await usersRepository.findByEmail(email);
+  async execute({ name, email, password }: IRequest): Promise<void> {
+    const emailExits = await this.usersRepository.findByEmail(email);
 
     if (emailExits) {
       throw new AppError('User already exists.');
@@ -22,13 +25,13 @@ class CreateUserService {
 
     const passwordHash = await hash(password, 8);
 
-    const user = usersRepository.create({
+    const user = this.usersRepository.create({
       name,
       email,
       password: passwordHash,
     });
 
-    await usersRepository.save(user);
+    return user;
   }
 }
 
