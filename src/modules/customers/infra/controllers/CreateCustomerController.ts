@@ -9,9 +9,9 @@ class CreateCustomerController {
 
     const createCustomerService = container.resolve(CreateCustomerService);
 
-    await createCustomerService.execute({ name, email });
+    const customer = await createCustomerService.execute({ name, email });
 
-    return response.status(201).send();
+    return response.status(201).json(customer);
   }
 }
 

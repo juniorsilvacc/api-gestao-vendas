@@ -8,9 +8,13 @@ class CreateProductController {
 
     const createProductService = container.resolve(CreateProductService);
 
-    await createProductService.execute({ name, price, quantity });
+    const product = await createProductService.execute({
+      name,
+      price,
+      quantity,
+    });
 
-    return response.status(201).send();
+    return response.status(201).json(product);
   }
 }
 

@@ -21,7 +21,7 @@ class UsersRepository implements IUsersRepository {
     return usersAll;
   }
 
-  async create({ name, email, password }: ICreateUserDTO): Promise<void> {
+  async create({ name, email, password }: ICreateUserDTO): Promise<IUser> {
     const createUser = this.ormRepository.create({
       name,
       email,
@@ -29,21 +29,23 @@ class UsersRepository implements IUsersRepository {
     });
 
     await this.ormRepository.save(createUser);
+
+    return createUser;
   }
 
-  async findByName(name: string): Promise<User | undefined> {
+  async findByName(name: string): Promise<IUser | undefined> {
     const userName = await this.ormRepository.findOne({ name });
 
     return userName;
   }
 
-  async findById(id: string): Promise<User | undefined> {
+  async findById(id: string): Promise<IUser | undefined> {
     const userId = await this.ormRepository.findOne(id);
 
     return userId;
   }
 
-  async findByEmail(email: string): Promise<User | undefined> {
+  async findByEmail(email: string): Promise<IUser | undefined> {
     const userEmail = await this.ormRepository.findOne({ email });
 
     return userEmail;

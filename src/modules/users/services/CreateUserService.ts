@@ -1,7 +1,8 @@
-import { AppError } from '@shared/errors/AppError';
+import { AppError } from '../../../shared/errors/AppError';
 import { IUsersRepository } from '../domain/repositories/IUsersRepository';
 import { inject, injectable } from 'tsyringe';
 import { IHashProvider } from '../providers/HashProvider/models/IHashProvider';
+import { IUser } from '../domain/models/IUser';
 
 interface IRequest {
   name: string;
@@ -18,7 +19,7 @@ class CreateUserService {
     private hashProvider: IHashProvider,
   ) {}
 
-  async execute({ name, email, password }: IRequest): Promise<void> {
+  async execute({ name, email, password }: IRequest): Promise<IUser> {
     const emailExits = await this.usersRepository.findByEmail(email);
 
     if (emailExits) {

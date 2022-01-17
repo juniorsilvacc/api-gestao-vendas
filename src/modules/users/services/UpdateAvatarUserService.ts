@@ -4,6 +4,7 @@ import uploadConfig from '@config/upload';
 import { AppError } from '@shared/errors/AppError';
 import { inject, injectable } from 'tsyringe';
 import { IUsersRepository } from '../domain/repositories/IUsersRepository';
+import { IUser } from '../domain/models/IUser';
 
 interface IRequest {
   user_id: string;
@@ -17,7 +18,7 @@ class UpdateAvatarUserService {
     private usersRepository: IUsersRepository,
   ) {}
 
-  async execute({ user_id, avatarFileName }: IRequest): Promise<void> {
+  async execute({ user_id, avatarFileName }: IRequest): Promise<IUser> {
     const user = await this.usersRepository.findById(user_id);
 
     if (!user) {
@@ -37,6 +38,8 @@ class UpdateAvatarUserService {
     user.avatar = avatarFileName;
 
     await this.usersRepository.save(user);
+
+    return user;
   }
 }
 

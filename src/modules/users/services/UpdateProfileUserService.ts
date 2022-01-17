@@ -1,8 +1,8 @@
 import { AppError } from '@shared/errors/AppError';
 import { compare, hash } from 'bcrypt';
 import { inject, injectable } from 'tsyringe';
+import { IUser } from '../domain/models/IUser';
 import { IUsersRepository } from '../domain/repositories/IUsersRepository';
-import { User } from '../infra/typeorm/entities/User';
 
 interface IRequest {
   id: string;
@@ -25,7 +25,7 @@ class UpdateProfileUserService {
     email,
     old_password,
     password,
-  }: IRequest): Promise<User> {
+  }: IRequest): Promise<IUser> {
     const user = await this.usersRepository.findById(id);
 
     if (!user) {
