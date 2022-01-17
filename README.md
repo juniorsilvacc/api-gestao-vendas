@@ -1,3 +1,7 @@
+Criação de uma api para gerenciamento de vendas com funcionalidades para criação de cadastro de produtos, cadastro de clientes, pedidos de compras, usuários com autenticação via JWT, recuperação de senha, perfil de usuários e outras funcionalidades.
+
+Essa aplicação está sendo desenvolvida em Node.js, estou aplicando boas práticas de código, Typescript, Design Patterns, Docker, PostgreSQL, Redis, DDD e todos os princípios SOLID necessários. Logo, logo irei aplicar testes automatizados com o frame Jest.
+
 # Cadastro de clientes
 
 **RF**
