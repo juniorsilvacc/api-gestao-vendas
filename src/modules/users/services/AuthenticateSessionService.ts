@@ -1,4 +1,4 @@
-import { AppError } from '@shared/errors/AppError';
+import { AppError } from '../../../shared/errors/AppError';
 
 import { sign } from 'jsonwebtoken';
 import authConfig from '../../../config/auth';
@@ -51,10 +51,7 @@ class AuthenticateSessionService {
     });
 
     return {
-      user: {
-        name: user.name,
-        email: user.email,
-      },
+      user,
       token,
     };
   }
