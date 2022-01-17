@@ -49,7 +49,11 @@ class CustomersInMemoryRepository implements ICustomersRepository {
   }
 
   async save(customer: Customer): Promise<ICustomer> {
-    Object.assign(this.customers, customer);
+    const findIndex = this.customers.findIndex(
+      findIndex => findIndex.id === customer.id,
+    );
+
+    this.customers[findIndex] = customer;
 
     return customer;
   }

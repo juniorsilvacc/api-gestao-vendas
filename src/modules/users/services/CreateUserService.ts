@@ -1,7 +1,7 @@
 import { AppError } from '@shared/errors/AppError';
-import { hash } from 'bcrypt';
 import { IUsersRepository } from '../domain/repositories/IUsersRepository';
 import { inject, injectable } from 'tsyringe';
+import { IHashProvider } from '../providers/HashProvider/models/IHashProvider';
 
 interface IRequest {
   name: string;
@@ -14,6 +14,8 @@ class CreateUserService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
+    @inject('HashProvider')
+    private hashProvider: IHashProvider,
   ) {}
 
   async execute({ name, email, password }: IRequest): Promise<void> {
@@ -23,7 +25,7 @@ class CreateUserService {
       throw new AppError('User already exists.');
     }
 
-    const passwordHash = await hash(password, 8);
+    const passwordHash = await this.hashProvider.generateHash(password);
 
     const user = this.usersRepository.create({
       name,

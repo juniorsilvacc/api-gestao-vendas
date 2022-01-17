@@ -1,9 +1,10 @@
 import { AppError } from '@shared/errors/AppError';
-import { compare } from 'bcrypt';
+
 import { sign } from 'jsonwebtoken';
 import authConfig from '../../../config/auth';
 import { inject, injectable } from 'tsyringe';
 import { IUsersRepository } from '../domain/repositories/IUsersRepository';
+import { IHashProvider } from '../providers/HashProvider/models/IHashProvider';
 
 interface IRequest {
   email: string;
@@ -24,6 +25,8 @@ class AuthenticateSessionService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
+    @inject('HashProvider')
+    private hashProvider: IHashProvider,
   ) {}
 
   async execute({ email, password }: IRequest): Promise<IResponse> {
@@ -33,7 +36,10 @@ class AuthenticateSessionService {
       throw new AppError('Email or password incorrect', 401);
     }
 
-    const passwordMatch = await compare(password, user.password);
+    const passwordMatch = await this.hashProvider.compareHash(
+      password,
+      user.password,
+    );
 
     if (!passwordMatch) {
       throw new AppError('Email or password incorrect', 401);
